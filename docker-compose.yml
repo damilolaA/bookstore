@@ -1,0 +1,20 @@
+version: "2"
+
+services:
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - "/data/db:/data/db"
+
+  nodeapp:
+    build:
+      context: .
+      dockerfile: Dockerfile 
+    image: nodeapp
+    ports:
+      - "2000:2000"
+      - "3000:3000"
+    volumes:
+      - "/c/Users/bookstore:/opt/app"
