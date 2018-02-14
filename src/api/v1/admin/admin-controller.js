@@ -16,6 +16,7 @@ exports.interceptIds = (req, res, next, id) => {
 exports.addAdmin = (req, res, next) => {
   //collect admin info from the request object(req.body)
   let adminInfo = req.body;
+  console.log(adminInfo);
 
   //create a new instance of adminModel and pass adminInfo
   let admin = new adminModel(adminInfo);
