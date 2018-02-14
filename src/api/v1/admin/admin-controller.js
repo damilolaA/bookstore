@@ -16,8 +16,7 @@ exports.interceptIds = (req, res, next, id) => {
 exports.addAdmin = (req, res, next) => {
   //collect admin info from the request object(req.body)
   let adminInfo = req.body;
-  console.log(adminInfo);
-
+ 
   //create a new instance of adminModel and pass adminInfo
   let admin = new adminModel(adminInfo);
 
@@ -32,23 +31,21 @@ exports.addAdmin = (req, res, next) => {
 };
 
 exports.getAdminById = (req, res, next) => {
-
   //check for admin data from interceptIds middleware
-  if(!req.admin) {
-    return next(new Error("could not get admin data by id"));
+  if (!req.admin) {
+    return next(new Error('could not get admin data by id'));
   }
 
   res.status(200).json(req.admin);
-}
+};
 
 exports.getAdmins = (req, res, next) => {
-
   //use mongoose find method to fetch all admins information
   adminModel.find((err, data) => {
-    if(err) {
-      return next(new Error("could not fetch all admins data"))
+    if (err) {
+      return next(new Error('could not fetch all admins data'));
     }
 
-    res.status(200).json(data)
-  })
-}
+    res.status(200).json(data);
+  });
+};

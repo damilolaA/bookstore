@@ -1,4 +1,5 @@
 let mongoose = require('mongoose'),
+	bcrypt   = require("bcrypt-nodejs"),
   adminSchema;
 
 //create connection between mongodb and mongoose
@@ -11,6 +12,30 @@ adminSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   hash: { type: String, required: true }
 });
+
+//call encryptPassword to hash plainText before saving adminInfo
+adminSchema.pre('save', function(next) {
+	this.hash = this.encryptPassword(this.hash);
+	next();
+});
+
+adminSchema.methods = {
+
+	//method to hash palinText using bcrypt module
+	encryptPassword: (plainText) => {
+		if(!plainText) {
+			return "please plain password";
+		}
+
+		let salt = bcrypt.genSaltSync();
+		return bcrypt.hashSync(plainText, salt);
+	},
+
+	//method to authenticate/validate plainText using bcrypt
+	authenticate: (plainText) => {
+		return bcrypt.compareSync(plainText, this.hash);
+	}
+}
 
 //create admin collection using adminSchema
 module.exports = mongoose.model('admin', adminSchema);
