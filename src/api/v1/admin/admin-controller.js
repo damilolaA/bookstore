@@ -29,3 +29,25 @@ exports.addAdmin = (req, res, next) => {
     res.status(200).json(data);
   });
 };
+
+exports.getAdminById = (req, res, next) => {
+
+  //check for admin data from interceptIds middleware
+  if(!req.admin) {
+    return next(new Error("could not get admin data by id"));
+  }
+
+  res.status(200).json(req.admin);
+}
+
+exports.getAdmins = (req, res, next) => {
+
+  //use mongoose find method to fetch all admins information
+  adminModel.find((err, data) => {
+    if(err) {
+      return next(new Error("could not fetch all admins data"))
+    }
+
+    res.status(200).json(data)
+  })
+}
