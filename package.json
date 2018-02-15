@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "prettier": "prettier --write --print-width=120 --tab-width=2 --single-quote \"src/**/*.js\"",
+    "format": "prettier --write --print-width=120 --tab-width=4 --single-quote \"src/**/*.js\"",
     "lint": "c:/Users/bookstore/node_modules/.bin/eslint ./src --ext .js"
   },
   "author": "",
