@@ -1,9 +1,9 @@
-const express = require('express');
-const bps = require('body-parser');
-const morgan = require('morgan');
-const cors = require('cors');
-const app = express();
-const api = require('../api/api.js');
+const express = require('express'),
+    bps = require('body-parser'),
+    morgan = require('morgan'),
+    cors = require('cors'),
+    api = require('../api/api.js'),
+    app = express();
 
 // mount body-parser middleware to parse req.body
 app.use(bps.json());

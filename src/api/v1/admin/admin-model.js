@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt-nodejs');
+const mongoose = require('mongoose'),
+    bcrypt = require('bcrypt-nodejs');
 
 let adminSchema;
 

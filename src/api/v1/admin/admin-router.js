@@ -1,6 +1,6 @@
-const express = require('express');
-const router = express.Router();
-const controller = require('./admin-controller.js');
+const express = require('express'),
+    controller = require('./admin-controller.js'),
+    router = express.Router();
 
 // mount interceptsIds controller on id intercepted by param
 router.param('id', controller.interceptIds);

@@ -15,10 +15,9 @@ exports.interceptIds = (req, res, next, id) => {
 
 exports.addAdmin = (req, res, next) => {
     // collect admin info from the request object(req.body)
-    let adminInfo = req.body;
-
-    // create a new instance of adminModel and pass adminInfo
-    let admin = new AdminModel(adminInfo);
+    let adminInfo = req.body,
+        // create a new instance of adminModel and pass adminInfo
+        admin = new AdminModel(adminInfo);
 
     // use the save method persist adminInfo into the db
     admin.save((err, data) => {
@@ -54,7 +53,7 @@ exports.deleteAdmin = (req, res, next) => {
     // get admin id from req.user object
     let id = req.admin._id;
 
-    AdminModel.remove({ _id: id }, (err, data) => {
+    AdminModel.remove({ _id: id }, err => {
         if (err) {
             return next(new Error('could not delete admin'));
         }
@@ -68,7 +67,7 @@ exports.updateAdmin = (req, res, next) => {
     let id = req.admin._id,
         newData = req.body;
 
-    AdminModel.update({ _id: id }, newData, { new: true }, (err, data) => {
+    AdminModel.update({ _id: id }, newData, { new: true }, err => {
         if (err) {
             return next(new Error('could not update Admin Info'));
         }
