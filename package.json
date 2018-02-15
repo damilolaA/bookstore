@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "format": "prettier --write --print-width=120 --tab-width=4 --single-quote \"src/**/*.js\"",
-    "lint": "c:/Users/bookstore/node_modules/.bin/eslint ./src --ext .js"
+    "lint": "c:/Users/bookstore/node_modules/.bin/eslint ./src --ext .js",
+    "test": "mocha src/server/specs.js --exit"
   },
   "author": "",
   "license": "ISC",
@@ -15,15 +16,18 @@
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "express": "^4.16.2",
+    "mocha": "^5.0.1",
     "mongoose": "^5.0.5",
     "morgan": "^1.9.0"
   },
   "devDependencies": {
+    "chai": "^4.1.2",
     "eslint": "^4.17.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-prettier": "^2.6.0"
+    "eslint-plugin-prettier": "^2.6.0",
+    "supertest": "^3.0.0"
   }
 }
