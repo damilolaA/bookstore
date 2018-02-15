@@ -1,4 +1,4 @@
-let app = require("./src/server/server.js")
+const app = require("./src/server/server.js");
 
 app.listen(2000, function(err) {
 	

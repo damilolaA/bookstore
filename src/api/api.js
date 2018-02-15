@@ -1,8 +1,8 @@
-let express = require('express'),
-  api = express.Router(),
-  adminRouter = require('./v1/admin/admin-router.js');
+const express = require('express');
+const api = express.Router();
+const adminRouter = require('./v1/admin/admin-router.js');
 
-//mount adminRouter on /admin path
+// mount adminRouter on /admin path
 api.use('/admin', adminRouter);
 
 module.exports = api;

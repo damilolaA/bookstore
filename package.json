@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "prettier": "prettier --write --print-width=120 --tab-width=2 --single-quote \"src/**/*.js\""
+    "prettier": "prettier --write --print-width=120 --tab-width=2 --single-quote \"src/**/*.js\"",
+    "lint": "c:/Users/bookstore/node_modules/.bin/eslint ./src --ext .js"
   },
   "author": "",
   "license": "ISC",
@@ -16,5 +17,12 @@
     "express": "^4.16.2",
     "mongoose": "^5.0.5",
     "morgan": "^1.9.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.17.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3"
   }
 }
