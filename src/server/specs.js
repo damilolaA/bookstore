@@ -33,7 +33,7 @@ describe('Admin Endpoints', () => {
             .expect(200)
             .end((err, res) => {
                 expect(res.body).to.be.an('array');
-                expect(res.body[0]).to.be.an("object");
+                expect(res.body[0]).to.be.an('object');
                 done();
             });
     });
@@ -44,7 +44,7 @@ describe('Admin Endpoints', () => {
             lastName: 'Winston',
             email: 'winstonkate@gmail.com',
             hash: 'kate'
-        }
+        };
         request(app)
             .post('/api/v1/admin')
             .send(data)
@@ -58,20 +58,20 @@ describe('Admin Endpoints', () => {
                     .send(null)
                     .expect(200)
                     .end((err, res) => {
-                        expect(res.body._id).to.equal(adminId)
-                        expect(res.body.email).to.equal(data.email)
-                        done()
-                    })
-            })
-    })
+                        expect(res.body._id).to.equal(adminId);
+                        expect(res.body.email).to.equal(data.email);
+                        done();
+                    });
+            });
+    });
 
     it('should test admin update endpoint', done => {
         let adminData = {
-            firstName: "Scot",
-            lastName: "Brown",
-            email: "brown@gmail.com",
-            hash: "kent"
-        }
+            firstName: 'Scot',
+            lastName: 'Brown',
+            email: 'brown@gmail.com',
+            hash: 'kent'
+        };
 
         request(app)
             .post('/api/v1/admin')
@@ -81,23 +81,23 @@ describe('Admin Endpoints', () => {
             .end((err, res) => {
                 let adminId = res.body._id,
                     newAdminData = {
-                        firstName: "Harry",
-                        lastName: "Styles",
-                        email: "harry@gmail.com",
-                        hash: "harry"
-                    }
+                        firstName: 'Harry',
+                        lastName: 'Styles',
+                        email: 'harry@gmail.com',
+                        hash: 'harry'
+                    };
 
                 request(app)
-                    .put('/api/v1/admin/'+adminId)
+                    .put('/api/v1/admin/' + adminId)
                     .send(newAdminData)
                     .set('Content-Type', 'Application/json')
                     .expect(200)
                     .end((err, res) => {
-                        expect(res.body).to.be.an('object')
-                        expect(res.body.firstName).to.equal(newAdminData.firstName)
-                        expect(res.body.lastName).to.equal(newAdminData.lastName)
-                        done()
-                    })
-            })
-    })
+                        expect(res.body).to.be.an('object');
+                        expect(res.body.firstName).to.equal(newAdminData.firstName);
+                        expect(res.body.lastName).to.equal(newAdminData.lastName);
+                        done();
+                    });
+            });
+    });
 });
