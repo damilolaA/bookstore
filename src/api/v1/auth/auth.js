@@ -17,7 +17,6 @@ exports.verifyAdmin = (req, res, next) => {
 			return next(new Error('invalid email and or password'))
 		}
 
-		req.admin = data;
-		next()
+		res.status(200).json(data)
 	})
 }
