@@ -8,7 +8,7 @@ const request = require('supertest'),
 
 describe('Bookstore App', () => {
     describe('Admin Endpoints', () => {
-        xit('should add admin', done => {
+        it('should add admin', done => {
             let adminData = {
                 firstName: 'Harry',
                 lastName: 'Kane',
@@ -67,7 +67,7 @@ describe('Bookstore App', () => {
                 });
         });
 
-        xit('should test admin update endpoint', done => {
+        it('should test admin update endpoint', done => {
             let adminData = {
                 firstName: 'Scot',
                 lastName: 'Brown',
@@ -107,8 +107,8 @@ describe('Bookstore App', () => {
     describe('auth endpoints', () => {
         it('should test admin login', done => {
             let adminData = {
-                email: 'johndoe@gmail.com',
-                password: 'john'
+                email: 'harrykane@gmail.com',
+                password: 'harry'
             };
 
             request(app)
