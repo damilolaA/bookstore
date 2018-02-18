@@ -19,13 +19,34 @@ exports.addCategory = (req, res, next) => {
 	let categoryDetails = new CategoryModel(categoryData);
 
 	categoryDetails.save((err, data) => {
-		console.log(data);
 		if(err) {
 			return next(new Error('could not add category'))
 		}
 
 		res.status(200).json(data)
 	})
+}
+
+exports.getCategories = (req, res, next) => {
+
+	CategoryModel.find((err, data) => {
+		if(err) {
+			return next(new Error('could not fetch all categories'));
+		}
+
+		res.status(200).json(data)
+	})
+}
+
+exports.getCategoryById = (req, res, next) => {
+
+	let categoryInfo = req.category;
+
+	if(!categoryInfo) {
+		return next(new Error('could not fetch category by Id'))
+	}
+
+	res.status(200).json(categoryInfo);
 }
 
 
