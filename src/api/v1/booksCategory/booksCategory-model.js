@@ -6,8 +6,6 @@ let categorySchema, connection;
 // create connection between mongoose and mongodb
 connection = mongoose.createConnection('mongodb://mongo/bookstore');
 
-//mongoose.connect('mongodb://mongo/bookstore');
-
 // intialize mongoose-auto-increment using mongoose connection
 autoIncrement.initialize(connection);
 
