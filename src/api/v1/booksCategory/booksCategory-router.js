@@ -8,6 +8,8 @@ router
 router
 	.route('/:id')
 	.get(controller.getCategoryById)
+	.delete(controller.deleteCategory)
+	.put(controller.updateCategory)
 
 router
 	.route('/')
