@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: node:latest
+      - image: circleci/node:latest
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -27,9 +27,5 @@ jobs:
       # run tests!
       - run: npm run test
 
-  general:
-    branches:
-      only:
-        - master # list of branches to build
 
 

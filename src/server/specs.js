@@ -1,3 +1,4 @@
+/* eslint-disable */
 const request = require('supertest'),
     chai = require('chai'),
     app = require('./server.js'),
@@ -6,9 +7,7 @@ const request = require('supertest'),
     should = chai.should();
 
 describe('Bookstore App', () => {
-
     describe('Admin Endpoints', () => {
-
         xit('should add admin', done => {
             let adminData = {
                 firstName: 'Harry',
@@ -106,12 +105,11 @@ describe('Bookstore App', () => {
     });
 
     describe('auth endpoints', () => {
-
         it('should test admin login', done => {
             let adminData = {
                 email: 'johndoe@gmail.com',
                 password: 'john'
-            }
+            };
 
             request(app)
                 .post('/api/v1/auth')
@@ -119,13 +117,11 @@ describe('Bookstore App', () => {
                 .set('Content-Type', 'Application/json')
                 .expect(200)
                 .end((err, data) => {
-
-                    expect(data.body).to.be.an('object')
-                    expect(data.body.email).to.equal(adminData.email)
-                    expect(data.body).to.have.property('msg')
-                    done()
-                })
-        })
-    })
-})
-
+                    expect(data.body).to.be.an('object');
+                    expect(data.body.email).to.equal(adminData.email);
+                    expect(data.body).to.have.property('msg');
+                    done();
+                });
+        });
+    });
+});

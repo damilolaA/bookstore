@@ -32,7 +32,7 @@ adminSchema.methods = {
     },
 
     // method to authenticate/validate plainText using bcrypt
-    authenticate: function(plainText) {
+    authenticate(plainText) {
         return bcrypt.compareSync(plainText, this.hash);
     }
 };
