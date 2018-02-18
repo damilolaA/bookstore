@@ -3,14 +3,18 @@ const mongoose = require('mongoose'),
 
 let categorySchema, connection;
 
+// create connection between mongoose and mongodb
 connection = mongoose.connect('mongodb/mongo/bookstore');
 
+// intialize mongoose-auto-increment using mongoose connection
 autoIncrement.initialize(connection);
 
+// define category schema
 categorySchema = new mongoose.Schema({
 	categoryName: {type:String, required:true}
 })
 
-categoryName.plugin(autoIncrement.plugin, 'category');
+// pass mongoose-auto-increment plugin to category schema
+categorySchema.plugin(autoIncrement.plugin, 'category');
 
 module.exports = mongoose.model('category', categorySchema);
