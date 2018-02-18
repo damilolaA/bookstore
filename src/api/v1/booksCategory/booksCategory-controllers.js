@@ -15,6 +15,7 @@ exports.interceptIds = (req, res, next, id) => {
 exports.addCategory = (req, res, next) => {
 
 	let categoryData = req.body;
+	console.log(categoryData);
 
 	let categoryDetails = new CategoryModel(categoryData);
 
