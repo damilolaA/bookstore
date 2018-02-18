@@ -4,7 +4,7 @@ const mongoose = require('mongoose'),
 let adminSchema;
 
 // create connection between mongodb and mongoose
-mongoose.connect('mongodb://mongo/bookstore');
+mongoose.connect('mongodb://localhost/bookstore');
 
 // define schema/structure for admin entity
 adminSchema = new mongoose.Schema({

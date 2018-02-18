@@ -4,6 +4,11 @@
 #
 version: 2
 jobs:
+  general:
+    branches:
+      ignore:
+        - auth
+        - booksCategory
   build:
     docker:
       # specify the version you desire here
