@@ -15,11 +15,11 @@ exports.interceptIds = (req, res, next, id) => {
 exports.addCategory = (req, res, next) => {
 
 	let categoryData = req.body;
-	console.log(categoryData);
 
 	let categoryDetails = new CategoryModel(categoryData);
 
 	categoryDetails.save((err, data) => {
+		console.log(data);
 		if(err) {
 			return next(new Error('could not add category'))
 		}

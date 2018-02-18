@@ -1,10 +1,9 @@
 const express = require('express'),
 	  router  = express.Router(),
-	  controller = require('./booksCategory-controller');
+	  controller = require('./booksCategory-controllers.js');
 
 router
-	.route('/:id')
-	.param(controller.interceptIds)
+	.param('id', controller.interceptIds)
 
 router
 	.route('/')
