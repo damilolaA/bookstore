@@ -19,7 +19,7 @@ jobs:
     steps:
       - checkout
 
-      - run: "Tests starting!!!"
+      - run: echo "Tests starting!!!"
 
       # Download and cache dependencies
       - run: npm install
