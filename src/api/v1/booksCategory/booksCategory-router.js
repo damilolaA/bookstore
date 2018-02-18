@@ -6,7 +6,12 @@ router
 	.param('id', controller.interceptIds)
 
 router
+	.route('/:id')
+	.get(controller.getCategoryById)
+
+router
 	.route('/')
 	.post(controller.addCategory)
+	.get(controller.getCategories)
 
 module.exports = router;
