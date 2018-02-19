@@ -3,12 +3,12 @@
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
 version: 2
-jobs:
-  general:
+general:
     branches:
       ignore:
         - auth
         - booksCategory
+jobs:
   build:
     docker:
       # specify the version you desire here
