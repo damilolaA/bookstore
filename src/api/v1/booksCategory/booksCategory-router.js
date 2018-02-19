@@ -1,19 +1,18 @@
 const express = require('express'),
-	  router  = express.Router(),
-	  controller = require('./booksCategory-controllers.js');
+  router = express.Router(),
+  controller = require('./booksCategory-controllers.js');
+
+router.param('id', controller.interceptIds);
 
 router
-	.param('id', controller.interceptIds)
+  .route('/:id')
+  .get(controller.getCategoryById)
+  .delete(controller.deleteCategory)
+  .put(controller.updateCategory);
 
 router
-	.route('/:id')
-	.get(controller.getCategoryById)
-	.delete(controller.deleteCategory)
-	.put(controller.updateCategory)
-
-router
-	.route('/')
-	.post(controller.addCategory)
-	.get(controller.getCategories)
+  .route('/')
+  .post(controller.addCategory)
+  .get(controller.getCategories);
 
 module.exports = router;

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose'),
-	  autoIncrement = require('mongoose-auto-increment');
+  autoIncrement = require('mongoose-auto-increment');
 
 let categorySchema, connection;
 
@@ -11,8 +11,8 @@ autoIncrement.initialize(connection);
 
 // define category schema
 categorySchema = new mongoose.Schema({
-	categoryName: {type:String, required:true}
-})
+  categoryName: { type: String, required: true }
+});
 
 // pass mongoose-auto-increment plugin to category schema
 categorySchema.plugin(autoIncrement.plugin, 'category');
