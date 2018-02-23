@@ -4,7 +4,7 @@ const mongoose = require('mongoose'),
 let categorySchema, connection;
 
 // create connection between mongoose and mongodb
-connection = mongoose.createConnection('mongodb://localhost/bookstore');
+connection = mongoose.createConnection('mongodb://mongo/bookstore');
 
 // intialize mongoose-auto-increment using mongoose connection
 autoIncrement.initialize(connection);
