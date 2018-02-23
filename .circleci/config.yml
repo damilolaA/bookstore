@@ -13,9 +13,10 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/node:latest
-      - image: mongo
+      - image: circleci/mongo:3.4.4
         environment:
           DATABASE_URL: mongodb://localhost/note
+          NODE_ENV: test
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
