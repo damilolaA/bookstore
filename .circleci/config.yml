@@ -33,6 +33,7 @@ jobs:
       # Download and cache dependencies
       - run: npm install
 
+      - run: NODE_ENV=test
       # run tests!
       - run: npm run test
 
