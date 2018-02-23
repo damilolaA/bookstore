@@ -1,6 +1,8 @@
-const app = require("./src/server/server.js");
+const app = require("./src/server/server.js"),
+	  config = require("./config/config.js"),
+	  port = config.port;
 
-app.listen(2000, function(err) {
+app.listen(port, function(err) {
 	
 	if(err) {
 		return console.log(err);
