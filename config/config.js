@@ -3,7 +3,7 @@ const _ = require("lodash");
 let config = {
 
 	dev: 'development',
-	test: 'testing',
+	test: 'test',
 	prod: 'production'
 }
 
