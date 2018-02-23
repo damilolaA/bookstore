@@ -6,7 +6,7 @@ const mongoose = require('mongoose'),
 let adminSchema;
 
 // create connection between mongodb and mongoose
-mongoose.connect(mongoURL, auth: { authdb: 'admin'});
+mongoose.connect(mongoURL);
 
 // define schema/structure for admin entity
 adminSchema = new mongoose.Schema({

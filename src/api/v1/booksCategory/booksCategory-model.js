@@ -6,7 +6,7 @@ const mongoose = require('mongoose'),
 let categorySchema, connection;
 
 // create connection between mongoose and mongodb
-connection = mongoose.createConnection(mongoURL, auth: { authdb: 'admin'});
+connection = mongoose.createConnection(mongoURL);
 
 // intialize mongoose-auto-increment using mongoose connection
 autoIncrement.initialize(connection);
