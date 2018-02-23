@@ -1,7 +1,9 @@
 const jwt = require('jsonwebtoken'),
   expressJwt = require('express-jwt'),
   AdminModel = require('../admin/admin-model.js'),
-  checkToken = expressJwt({ secret: 'adminToken' });
+  config = require('../../../../config/config.js'),
+  secret = config.secret,
+  checkToken = expressJwt({ secret: secret });
 
 exports.decodeToken = (req, res, next) => {
   checkToken(req, res, next);
@@ -37,5 +39,5 @@ exports.verifyAdmin = (req, res, next) => {
 };
 
 exports.signToken = id => {
-  return jwt.sign({ _id: id }, 'adminToken', { expiresIn: 60 * 60 * 24 * 7 });
+  return jwt.sign({ _id: id }, secret, { expiresIn: 60 * 60 * 24 * 7 });
 };

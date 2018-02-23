@@ -1,10 +1,12 @@
 const mongoose = require('mongoose'),
-  bcrypt = require('bcrypt-nodejs');
+  bcrypt = require('bcrypt-nodejs'),
+  config = require('../../../../config/config.js'),
+  mongoURL = config.mongodbUrl;
 
 let adminSchema;
 
 // create connection between mongodb and mongoose
-mongoose.connect('mongodb://mongo/bookstore');
+mongoose.connect(mongoURL);
 
 // define schema/structure for admin entity
 adminSchema = new mongoose.Schema({

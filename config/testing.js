@@ -1,3 +1,4 @@
 module.exports = {
-	mongodbUrl = "mongodb://localhost/bookstore";
+	mongodbUrl: "mongodb://localhost/bookstore",
+	secret: 'adminToken'
 }

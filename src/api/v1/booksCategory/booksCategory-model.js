@@ -1,10 +1,12 @@
 const mongoose = require('mongoose'),
-  autoIncrement = require('mongoose-auto-increment');
+  autoIncrement = require('mongoose-auto-increment'),
+  config = require('../../../../config/config.js'),
+  mongoURL = config.mongodbUrl;
 
 let categorySchema, connection;
 
 // create connection between mongoose and mongodb
-connection = mongoose.createConnection('mongodb://mongo/bookstore');
+connection = mongoose.createConnection(mongoURL);
 
 // intialize mongoose-auto-increment using mongoose connection
 autoIncrement.initialize(connection);
