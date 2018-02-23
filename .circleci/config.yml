@@ -8,15 +8,21 @@ general:
       ignore:
         - auth
         - booksCategory
+machine:
+  environment:
+    NODE_ENV: test
+
 jobs:
   build:
     docker:
       # specify the version you desire here
       - image: circleci/node:latest
+        environment:
+          NODE_ENV: test
+          
       - image: circleci/mongo:3.4.4
         environment:
           DATABASE_URL: mongodb://localhost/note
-          NODE_ENV: test
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -33,7 +39,6 @@ jobs:
       # Download and cache dependencies
       - run: npm install
 
-      - run: NODE_ENV=test
       # run tests!
       - run: npm run test
 
