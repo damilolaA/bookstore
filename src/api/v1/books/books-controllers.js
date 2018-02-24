@@ -37,13 +37,14 @@ exports.addBook = (req, res, next) => {
 		return next(new Error('file not uploaded'));
 	}
 
-	let filename = 
+	let filename = req.file.path;
 	let book = req.body;
 
-	console.log(req.file);
-	console.log(req.body);
+	book['imagePath'] = filename;
 
 	let bookData = new BooksModel(book);
+
+	console.log(bookData);
 
 	bookData.save((err, data) => {
 		if(err) {
