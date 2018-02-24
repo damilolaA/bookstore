@@ -57,7 +57,7 @@ exports.deleteCategory = (req, res, next) => {
   let categoryId = req.category._id;
 
   // use mongoose remove method to delete a category item
-  CategoryModel.remove({ _id: categoryId }, (err) => {
+  CategoryModel.remove({ _id: categoryId }, err => {
     if (err) {
       return next(new Error('could not delete category by Id'));
     }
@@ -70,7 +70,7 @@ exports.updateCategory = (req, res, next) => {
   let categoryId = req.category._id;
 
   // use mongoose update to update a category data by Id
-  CategoryModel.update({ _id: categoryId }, req.body, { new: true }, (err) => {
+  CategoryModel.update({ _id: categoryId }, req.body, { new: true }, err => {
     if (err) {
       return next(new Error('could not update category details'));
     }

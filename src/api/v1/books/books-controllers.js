@@ -1,114 +1,103 @@
-const BooksModel = require('./books-model.js');
-const multer = require('multer');
-const uuidv4 = require('uuid/v4');
+const BooksModel = require('./books-model.js'),
+  multer = require('multer'),
+  uuidv4 = require('uuid/v4'),
+  // tell multer to store files on disk
+  storage = multer.diskStorage({
+    // define files destination
+    destination: './uploads/',
 
-// tell multer to store files on disk
-const storage = multer.diskStorage({
-	// define files destination
-	destination: './uploads/',
+    // use filename property to determine upload file name
+    filename: (req, file, cb) => {
+      let generatedId = uuidv4(),
+        fileName = file.originalname + generatedId;
 
-	// use filename property to determine upload file name
-	filename: function(req, file, cb) {
-
-		let generatedId = uuidv4();
-		let	fileName = file.originalname + generatedId;
-
-		cb(null, fileName);
-	}
-})
+      cb(null, fileName);
+    }
+  });
 
 // instantiate multer to use single property and specify fieldname
-exports.upload = multer({storage: storage}).single('imagePath');
+exports.upload = multer({ storage }).single('imagePath');
 
 exports.interceptBooksId = (req, res, next, id) => {
+  BooksModel.findById(id, (err, data) => {
+    if (err) {
+      return next(new Error('could not get book id'));
+    }
 
-	BooksModel.findById(id, (err, data) => {
-		if(err) {
-			return next(new Error('could not get book id'))
-		}
-
-		req.book = data;
-		next();
-	});
-}
+    req.book = data;
+    next();
+  });
+};
 
 exports.addBook = (req, res, next) => {
+  // check if a file was uploaded
+  if (!req.file) {
+    return next(new Error('file not uploaded'));
+  }
 
-	// check if a file was uploaded 
-	if(!req.file) {
-		return next(new Error('file not uploaded'));
-	}
+  // pass file path to filename
+  let filename = req.file.path,
+    book = req.body;
 
-	// pass file path to filename 
-	let filename = req.file.path;
-	let book = req.body;
+  // add imagePath property on book object
+  book.imagePath = filename;
 
-	// add imagePath property on book object
-	book['imagePath'] = filename;	
+  // instantiate BooksModel and pass book object
+  const bookData = new BooksModel(book);
 
-	// instantiate BooksModel and pass book object
-	let bookData = new BooksModel(book);
+  // use mongoose save method to persist bookData
+  bookData.save((err, data) => {
+    if (err) {
+      return next(new Error('could not save book'));
+    }
 
-	console.log(bookData);
-
-	// use mongoose save method to persist bookData
-	bookData.save((err, data) => {
-		if(err) {
-			return next(new Error('could not save book'))
-		}
-
-		res.status(200).json(data)
-	})
-}
+    res.status(200).json(data);
+  });
+};
 
 exports.getBooks = (req, res, next) => {
+  BooksModel.find((err, data) => {
+    if (err) {
+      return next(new Error('could not fetch books'));
+    }
 
-	BooksModel.find((err, data) => {
-		if(err) {
-			return next(new Error('could not fetch books'));
-		}
-
-		res.status(200).json(data);
-	})
-}
+    res.status(200).json(data);
+  });
+};
 
 exports.getBookById = (req, res, next) => {
+  if (!req.book) {
+    return next(new Error('could not find book by id'));
+  }
 
-	if(!req.book) {
-		return next(new Error('could not find book by id'));
-	}
-
-	res.status(200).json(req.book);
-}
+  res.status(200).json(req.book);
+};
 
 exports.deleteBook = (req, res, next) => {
+  let bookId = req.book._id;
 
-	let bookId = req.book._id;
+  BooksModel.remove({ _id: bookId }, err => {
+    if (err) {
+      return next(new Error('could not delete book by Id'));
+    }
 
-	BooksModel.remove({_id: bookId}, (err) => {
-		if(err) {
-			return next(new Error('could not delete book by Id'));
-		}
-
-		res.status(200).json(req.book);
-	})
-}
+    res.status(200).json(req.book);
+  });
+};
 
 exports.updateBook = (req, res, next) => {
+  let bookId = req.book._id,
+    filename = req.file.path,
+    bookData = req.body;
 
-	let bookId = req.book._id;
+  // add imagePath property on book object
+  bookData.imagePath = filename;
 
-	let filename = req.file.path;
-	let bookData = req.body;
+  BooksModel.update({ _id: bookId }, bookData, { new: true }, err => {
+    if (err) {
+      return next(new Error('could not update book by Id'));
+    }
+  });
 
-	// add imagePath property on book object
-	bookData['imagePath'] = filename;
-
-	BooksModel.update({_id: bookId}, bookData, {new: true}, (err, data) => {
-		if(err) {
-			return next(new Error('could not update book by Id'));
-		}
-	})
-
-	res.status(200).json(bookData);
-}
+  res.status(200).json(bookData);
+};

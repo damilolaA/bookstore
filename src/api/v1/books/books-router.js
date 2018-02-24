@@ -1,17 +1,19 @@
-const express = require('express');
-const router  = express.Router();
-const controllers = require('./books-controllers.js');
+const express = require('express'),
+  router = express.Router(),
+  controllers = require('./books-controllers.js');
 
 router.param('id', controllers.interceptBooksId);
 
-router.route('/:id')
-	.get(controllers.getBookById)
-	.delete(controllers.deleteBook)
-	.put(controllers.upload, controllers.updateBook)
+router
+  .route('/:id')
+  .get(controllers.getBookById)
+  .delete(controllers.deleteBook)
+  .put(controllers.upload, controllers.updateBook);
 
 // mount addBook controller on post method and root route
-router.route('/')
-	.post(controllers.upload, controllers.addBook)
-	.get(controllers.getBooks)
+router
+  .route('/')
+  .post(controllers.upload, controllers.addBook)
+  .get(controllers.getBooks);
 
 module.exports = router;

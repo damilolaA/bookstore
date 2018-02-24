@@ -2,8 +2,8 @@ const jwt = require('jsonwebtoken'),
   expressJwt = require('express-jwt'),
   AdminModel = require('../admin/admin-model.js'),
   config = require('../../../../config/config.js'),
-  secret = config.secret,
-  checkToken = expressJwt({ secret: secret });
+  { secret } = config,
+  checkToken = expressJwt({ secret });
 
 exports.decodeToken = (req, res, next) => {
   checkToken(req, res, next);

@@ -15,7 +15,6 @@
 	"rules": {
 		"no-console": "off",
 		"consistent-return": ["off", { "treatUndefinedAsUnspecified": false }],
-		"one-var-declaration-per-line": ["off", "initializations"],
 		"no-underscore-dangle": "off",
 		"no-shadow": "off",
 		"prefer-const": "off",
