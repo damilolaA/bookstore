@@ -1,7 +1,9 @@
 const mongoose = require('mongoose'),
+	  config   = require('../../../config/config.js'),
+	  mongodbURL = config.mongodbUrl,
 	 booksSchema;
 
-mongoose.connect('mongodb/mongo/bookstore');
+mongoose.connect(mongodbURL);
 
 booksSchema = new mongoose.Schema({
 	title: {type: String, required:true},
