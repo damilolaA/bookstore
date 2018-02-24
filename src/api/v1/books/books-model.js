@@ -10,5 +10,7 @@ booksSchema = new mongoose.Schema({
 	author: {type: String, required:true},
 	price: {type: Number, required:true},
 	publicationDate: {type: Date, required:true},
-	categoryId: {}
-})
+	categoryId: {type: Number, required:true}
+});
+
+module.exports = mongoose.model('book', booksSchema);
