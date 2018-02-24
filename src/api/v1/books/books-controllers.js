@@ -5,15 +5,15 @@ const uuidv4 = require('uuid/v4');
 // tell multer to store files on disk
 const storage = multer.diskStorage({
 	// define files destination
-	destination: '/uploads',
+	destination: './uploads/',
 
 	// use filename property to determine upload file name
 	filename: function(req, file, cb) {
 
-		let generatedId = uuidv4(),
-			fileName = file.originalname + generatedId;
+		let generatedId = uuidv4();
+		let	fileName = file.originalname + generatedId;
 
-		cb(null, filename);
+		cb(null, fileName);
 	}
 })
 
@@ -59,4 +59,24 @@ exports.addBook = (req, res, next) => {
 
 		res.status(200).json(data)
 	})
+}
+
+exports.getBooks = (req, res, next) => {
+
+	BooksModel.find((err, data) => {
+		if(err) {
+			return next(new Error('could not fetch books'));
+		}
+
+		res.status(200).json(data);
+	})
+}
+
+exports.getBookById = (req, res, next) => {
+
+	if(!req.book) {
+		return next(new Error('could not find book by id'));
+	}
+
+	res.status(200).json(req.book);
 }
