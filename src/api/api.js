@@ -15,6 +15,6 @@ api.use('/auth', authRouter);
 api.use('/category', categoryRouter);
 
 // mount booksRouter on /books path
-api.use('/books', booksRoutero);
+api.use('/books', booksRouter);
 
 module.exports = api;

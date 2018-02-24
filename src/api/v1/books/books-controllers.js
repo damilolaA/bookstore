@@ -17,7 +17,9 @@ exports.addBook = (req, res, next) => {
 	let book = req.body,
 		bookData = new BooksModel(book);
 
-	bookData.save('save', (err, data) => {
+	console.log(bookData);
+
+	bookData.save((err, data) => {
 		if(err) {
 			return next(new Error('could not save book'))
 		}
