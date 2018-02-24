@@ -8,6 +8,7 @@ general:
       ignore:
         - auth
         - booksCategory
+        - books
 machine:
   environment:
     NODE_ENV: test
