@@ -80,3 +80,35 @@ exports.getBookById = (req, res, next) => {
 
 	res.status(200).json(req.book);
 }
+
+exports.deleteBook = (req, res, next) => {
+
+	let bookId = req.book._id;
+
+	BooksModel.remove({_id: bookId}, (err) => {
+		if(err) {
+			return next(new Error('could not delete book by Id'));
+		}
+
+		res.status(200).json(req.book);
+	})
+}
+
+exports.updateBook = (req, res, next) => {
+
+	let bookId = req.book._id;
+
+	let filename = req.file.path;
+	let bookData = req.body;
+
+	// add imagePath property on book object
+	bookData['imagePath'] = filename;
+
+	BooksModel.update({_id: bookId}, bookData, {new: true}, (err, data) => {
+		if(err) {
+			return next(new Error('could not update book by Id'));
+		}
+	})
+
+	res.status(200).json(bookData);
+}
