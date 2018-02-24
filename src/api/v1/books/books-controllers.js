@@ -1,4 +1,23 @@
 const BooksModel = require('./books-model.js');
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+	destination: '/uploads',
+	filename: function(req, file, cb) {
+		cb(null, file.originalname)
+	}
+})
+
+exports.upload = multer({storage: storage}).single('imagePath');
+
+/*exports.fileUpload = (req, res, next, upload) => {
+	if(!req.file) {
+		return next(new Error('no file uploaded'))
+	}
+
+	console.log(req.file + ' file');
+	next()
+}*/
 
 exports.interceptBooksId = (req, res, next, id) => {
 
@@ -14,10 +33,17 @@ exports.interceptBooksId = (req, res, next, id) => {
 
 exports.addBook = (req, res, next) => {
 
-	let book = req.body,
-		bookData = new BooksModel(book);
+	if(!req.file) {
+		return next(new Error('file not uploaded'));
+	}
 
-	console.log(bookData);
+	let filename = 
+	let book = req.body;
+
+	console.log(req.file);
+	console.log(req.body);
+
+	let bookData = new BooksModel(book);
 
 	bookData.save((err, data) => {
 		if(err) {

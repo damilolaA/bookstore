@@ -17,6 +17,4 @@ const envconfig = require('./' + config.env);
 
 const data = _.merge(config, envconfig);
 
-console.log(data.mongodbUrl);
-
 module.exports = data;

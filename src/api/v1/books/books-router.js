@@ -6,6 +6,6 @@ router.param('id', controllers.interceptBooksId);
 
 // mount addBook controller on post method and root route
 router.route('/')
-	.post(controllers.addBook);
+	.post(controllers.upload, controllers.addBook);
 
 module.exports = router;
