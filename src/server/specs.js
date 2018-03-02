@@ -133,7 +133,7 @@ describe('Bookstore App', () => {
         price: 50,
         publicationDate: '2/3/2018',
         categoryId: 2,
-        imagePath: 'uploads/intro-to-laravel'
+        imagePath: 'uploads/microservices'
       };
 
       request(app)
@@ -163,8 +163,8 @@ describe('Bookstore App', () => {
 
     it('should delete book', done => {
       let book = {
-        title: 'Integration Testing',
-        author: 'Don Wilson',
+        title: 'Play Test',
+        author: 'Jim Brown',
         price: 40,
         publicationDate: '1/2/2018',
         categoryId: 4,
@@ -180,7 +180,7 @@ describe('Bookstore App', () => {
           let bookId = res.body._id;
 
           request(app)
-            .delete('/api/v1/books' + bookId)
+            .delete('/api/v1/books/' + bookId)
             .expect(200)
             .end((err, res) => {
               expect(res.body._id).to.equal(bookId);

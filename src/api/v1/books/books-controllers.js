@@ -31,13 +31,14 @@ exports.interceptBooksId = (req, res, next, id) => {
 
 exports.addBook = (req, res, next) => {
   // check if a file was uploaded
-  if (!req.file) {
-    return next(new Error('file not uploaded'));
+  let filename;
+  
+  if (req.file) {
+    // pass file path to filename
+    filename = req.file.path;
   }
 
-  // pass file path to filename
-  let filename = req.file.path,
-    book = req.body;
+  let book = req.body;
 
   // add imagePath property on book object
   book.imagePath = filename;
