@@ -8,11 +8,11 @@ const request = require('supertest'),
 
 describe('Bookstore App', () => {
   describe('Admin Endpoints', () => {
-    xit('should add admin', done => {
+    it('should add admin', done => {
       let adminData = {
         firstName: 'Harry',
         lastName: 'Kane',
-        email: 'harrykane@gmail.com',
+        email: 'harrykane@yahoo.com',
         hash: 'harry'
       };
       request(app)
@@ -69,10 +69,10 @@ describe('Bookstore App', () => {
 
     it('should test admin update endpoint', done => {
       let adminData = {
-        firstName: 'Scot',
-        lastName: 'Brown',
-        email: 'brown@gmail.com',
-        hash: 'kent'
+        firstName: 'Diego',
+        lastName: 'Simeone',
+        email: 'diego@gmail.com',
+        hash: 'diego'
       };
 
       request(app)
@@ -105,9 +105,9 @@ describe('Bookstore App', () => {
   });
 
   describe('Auth Endpoints', () => {
-    xit('should test admin login', done => {
+    it('should test admin login', done => {
       let adminData = {
-        email: 'harrykane@gmail.com',
+        email: 'harrykane@yahoo.com',
         password: 'harry'
       };
 
@@ -126,16 +126,15 @@ describe('Bookstore App', () => {
   });
 
   describe('Books Endpoints', () => {
-
-    xit('should add books', (done) => {
+    it('should add books', done => {
       let book = {
-        title: 'Intro to Laravel',
+        title: 'MicroServices',
         author: 'Jerry King',
         price: 50,
         publicationDate: '2/3/2018',
         categoryId: 2,
         imagePath: 'uploads/intro-to-laravel'
-      }
+      };
 
       request(app)
         .post('/api/v1/books')
@@ -148,14 +147,12 @@ describe('Bookstore App', () => {
         });
     });
 
-    it('should get all books', (done) => {
-
+    it('should get all books', done => {
       request(app)
         .get('/api/v1/books')
         .expect('Content-Type', 'Application/json')
         .expect(200)
         .end((err, res) => {
-          
           expect(res.body).to.be.an('array');
           expect(res.body[0]).to.be.an('object');
           expect(res.body[0]).to.have.property('author');
@@ -163,7 +160,7 @@ describe('Bookstore App', () => {
         });
     });
 
-    it('should delete book', (done) => {
+    it('should delete book', done => {
       let book = {
         title: 'Integration Testing',
         author: 'Don Wilson',
@@ -171,7 +168,7 @@ describe('Bookstore App', () => {
         publicationDate: '1/2/2018',
         categoryId: 4,
         imagePath: 'tests'
-      }
+      };
 
       request(app)
         .post('/api/v1/books')
@@ -189,7 +186,6 @@ describe('Bookstore App', () => {
               done();
             });
         });
-    })
+    });
   });
-
 });
