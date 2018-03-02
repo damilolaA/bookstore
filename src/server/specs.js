@@ -8,7 +8,7 @@ const request = require('supertest'),
 
 describe('Bookstore App', () => {
   describe('Admin Endpoints', () => {
-    it('should add admin', done => {
+    xit('should add admin', done => {
       let adminData = {
         firstName: 'Harry',
         lastName: 'Kane',
@@ -104,8 +104,8 @@ describe('Bookstore App', () => {
     });
   });
 
-  describe('auth endpoints', () => {
-    it('should test admin login', done => {
+  describe('Auth Endpoints', () => {
+    xit('should test admin login', done => {
       let adminData = {
         email: 'harrykane@gmail.com',
         password: 'harry'
@@ -124,4 +124,72 @@ describe('Bookstore App', () => {
         });
     });
   });
+
+  describe('Books Endpoints', () => {
+
+    xit('should add books', (done) => {
+      let book = {
+        title: 'Intro to Laravel',
+        author: 'Jerry King',
+        price: 50,
+        publicationDate: '2/3/2018',
+        categoryId: 2,
+        imagePath: 'uploads/intro-to-laravel'
+      }
+
+      request(app)
+        .post('/api/v1/books')
+        .send(book)
+        .set('Content-Type', 'Application/json')
+        .expect(200)
+        .end((err, res) => {
+          console.log(res.body);
+          done();
+        });
+    });
+
+    it('should get all books', (done) => {
+
+      request(app)
+        .get('/api/v1/books')
+        .expect('Content-Type', 'Application/json')
+        .expect(200)
+        .end((err, res) => {
+          
+          expect(res.body).to.be.an('array');
+          expect(res.body[0]).to.be.an('object');
+          expect(res.body[0]).to.have.property('author');
+          done();
+        });
+    });
+
+    it('should delete book', (done) => {
+      let book = {
+        title: 'Integration Testing',
+        author: 'Don Wilson',
+        price: 40,
+        publicationDate: '1/2/2018',
+        categoryId: 4,
+        imagePath: 'tests'
+      }
+
+      request(app)
+        .post('/api/v1/books')
+        .send(book)
+        .set('Content-Type', 'Application/json')
+        .expect(200)
+        .end((err, res) => {
+          let bookId = res.body._id;
+
+          request(app)
+            .delete('/api/v1/books' + bookId)
+            .expect(200)
+            .end((err, res) => {
+              expect(res.body._id).to.equal(bookId);
+              done();
+            });
+        });
+    })
+  });
+
 });
