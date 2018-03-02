@@ -8,7 +8,7 @@ const request = require('supertest'),
 
 describe('Bookstore App', () => {
   describe('Admin Endpoints', () => {
-    xit('should add admin', done => {
+    it('should add admin', done => {
       let adminData = {
         firstName: 'Harry',
         lastName: 'Kane',
@@ -67,7 +67,7 @@ describe('Bookstore App', () => {
         });
     });
 
-    xit('should test admin update endpoint', done => {
+    it('should test admin update endpoint', done => {
       let adminData = {
         firstName: 'Diego',
         lastName: 'Simeone',
@@ -105,7 +105,7 @@ describe('Bookstore App', () => {
   });
 
   describe('Auth Endpoints', () => {
-    xit('should test admin login', done => {
+    it('should test admin login', done => {
       let adminData = {
         email: 'harrykane@yahoo.com',
         password: 'harry'
@@ -126,7 +126,7 @@ describe('Bookstore App', () => {
   });
 
   describe('Books Endpoints', () => {
-    xit('should add books', done => {
+    it('should add books', done => {
       let book = {
         title: 'MicroServices',
         author: 'Jerry King',
@@ -154,7 +154,6 @@ describe('Bookstore App', () => {
         .expect('Content-Type', 'Application/json')
         .expect(200)
         .end((err, res) => {
-          console.log(res.body);
           expect(res.body).to.be.an('array');
           expect(res.body[0]).to.be.an('object');
           expect(res.body[0]).to.have.property('author');
