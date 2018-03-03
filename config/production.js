@@ -3,5 +3,5 @@ module.exports = {
 	mongodbUrl: process.env.MONGOLAB_URI,
 	secret: 'adminToken',
 	redisPort: 6379,
-	redisHost: 'redis'
+	redisHost: process.env.REDIS_URL
 }
