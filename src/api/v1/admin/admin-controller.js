@@ -1,4 +1,6 @@
-const AdminModel = require('./admin-model.js');
+const AdminModel = require('./admin-model.js'),
+      redisClient = require('redis').createClient,
+      redis = redisClient(6379, 'redis');
 
 exports.interceptIds = (req, res, next, id) => {
   // find admin using id
@@ -39,13 +41,27 @@ exports.getAdminById = (req, res, next) => {
 };
 
 exports.getAdmins = (req, res, next) => {
-  // use mongoose find method to fetch all admins information
-  AdminModel.find((err, data) => {
-    if (err) {
-      return next(new Error('could not fetch all admins data'));
+  // search redis server for data if cached
+  redis.get('getAllAdmins', (err, resp) => {
+    if(err) {
+      return next(new Error('error fetch from cache'))
     }
 
-    res.status(200).json(data);
+    if(resp) {
+      console.log('done by redis');
+      res.status(200).json(JSON.parse(resp));
+    } else {
+      // use mongoose find method to fetch all admins information
+      AdminModel.find((err, data) => {
+        if (err) {
+          return next(new Error('could not fetch all admins data'));
+        }
+
+        redis.setex('getAllAdmins', 300, JSON.stringify(data))
+        console.log('done by server');
+        res.status(200).json(data);
+      });
+    }
   });
 };
 

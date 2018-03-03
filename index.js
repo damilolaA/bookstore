@@ -8,5 +8,5 @@ app.listen(port, function(err) {
 		return console.log(err);
 	}
 
-	console.log("server started!!!...")
+	console.log("server started at port " + port);
 })
