@@ -27,7 +27,7 @@ jobs:
 
       - image: redis
         environment:
-          REDIS_URL: redis://localhost:6391
+          REDIS_URL: redis://localhost:6379
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
