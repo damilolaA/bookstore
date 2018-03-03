@@ -26,6 +26,8 @@ jobs:
           DATABASE_URL: mongodb://localhost/note
 
       - image: redis
+        environment:
+          REDIS_ENV=test
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
