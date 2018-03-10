@@ -1,4 +1,5 @@
-const BooksModel = require('./books-model.js'),
+const fs = require('fs'),
+  BooksModel = require('./books-model.js'),
   multer = require('multer'),
   uuidv4 = require('uuid/v4'),
   // tell multer to store files on disk
@@ -32,10 +33,11 @@ exports.interceptBooksId = (req, res, next, id) => {
 exports.addBook = (req, res, next) => {
   // check if a file was uploaded
   let filename;
-  
+
   if (req.file) {
     // pass file path to filename
     filename = req.file.path;
+    //filename = "http://localhost:port/api/image/" + req.file.filename;
   }
 
   let book = req.body;
@@ -49,7 +51,7 @@ exports.addBook = (req, res, next) => {
   // use mongoose save method to persist bookData
   bookData.save((err, data) => {
     if (err) {
-      return next(new Error('could not save book'));
+      return next(new Error(err));
     }
 
     res.status(200).json(data);
@@ -65,6 +67,20 @@ exports.getBooks = (req, res, next) => {
     res.status(200).json(data);
   });
 };
+
+/*exports.getImages = (req, res, next) => {
+      
+  image = book.imagePath;
+
+  fs.readFile(image, (err, img) => {
+    if(err) {
+      return console.log('file system could not read imagePath');
+    }
+
+    book = book.toObject();
+    book.img = img;
+  })
+}*/
 
 exports.getBookById = (req, res, next) => {
   if (!req.book) {

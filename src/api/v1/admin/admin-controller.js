@@ -1,9 +1,9 @@
 const AdminModel = require('./admin-model.js'),
-      redisClient = require('redis').createClient,
-      config = require('../../../../config/config.js'),
-      { redisURL, redisPort, redisHost } = config,
-      //redis = redisClient(redisPort, redisHost);
-      redis = redisClient(redisURL);
+  redisClient = require('redis').createClient,
+  config = require('../../../../config/config.js'),
+  { redisURL, redisPort, redisHost } = config,
+  redis = redisClient(redisPort, redisHost);
+//redis = redisClient(redisURL);
 
 exports.interceptIds = (req, res, next, id) => {
   // find admin using id
@@ -46,11 +46,11 @@ exports.getAdminById = (req, res, next) => {
 exports.getAdmins = (req, res, next) => {
   // search redis server for data if cached
   redis.get('getAllAdmins', (err, resp) => {
-    if(err) {
-      return next(new Error('error fetch from cache'))
+    if (err) {
+      return next(new Error('error fetch from cache'));
     }
 
-    if(resp) {
+    if (resp) {
       console.log('done by redis');
       res.status(200).json(JSON.parse(resp));
     } else {
@@ -60,7 +60,7 @@ exports.getAdmins = (req, res, next) => {
           return next(new Error('could not fetch all admins data'));
         }
 
-        redis.setex('getAllAdmins', 300, JSON.stringify(data))
+        redis.setex('getAllAdmins', 300, JSON.stringify(data));
         console.log('done by server');
         res.status(200).json(data);
       });

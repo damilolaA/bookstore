@@ -12,7 +12,7 @@ booksSchema = new mongoose.Schema({
   price: { type: Number, required: true },
   publicationDate: { type: String, required: true },
   categoryId: { type: Number, required: true },
-  imagePath: { type: String}
+  imagePath: { type: String }
 });
 
 module.exports = mongoose.model('book', booksSchema);
