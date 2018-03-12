@@ -1,7 +1,6 @@
 const mime = require('mime'),
   BooksModel = require('./books-model.js'),
   multer = require('multer'),
-  uuidv4 = require('uuid/v4'),
   // tell multer to store files on disk
   storage = multer.diskStorage({
     // define files destination
@@ -9,19 +8,17 @@ const mime = require('mime'),
 
     // use filename property to determine upload file name
     filename: (req, file, cb) => {
-       //generatedId = uuidv4(),
-      let fileName = file.originalname;
-
-      cb(null, fileName + '-' + Date.now());
+      // generate unique number and use mime to get file extension
+      cb(null, '123' + '-' + Date.now() + '.' + mime.getExtension(file.mimetype));
     }
   });
 
 let fileFilter = (req, file, cb) => {
-  if(file.mimetype !== "image/jpg" && file.mimetype !== "image/jpeg" && file.mimetype !== "image/png") {
-    return cb("please upload a valid book image", false);
+  if (file.mimetype !== 'image/jpg' && file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png') {
+    return cb('please upload a valid book image', false);
   }
   cb(null, true);
-}
+};
 
 // instantiate multer to use single property and specify fieldname
 exports.upload = multer({ storage, fileFilter }).single('imagePath');
@@ -39,15 +36,14 @@ exports.interceptBooksId = (req, res, next, id) => {
 
 exports.addBook = (req, res, next) => {
   // check if a file was uploaded
-  let filename;
-
+  let book = req.body,
+      filename;
+      
   if (req.file) {
     // pass file path to filename
-    //filename = req.file.path;
-    filename = "http://192.168.99.100:2000/images/" + req.file.filename;
+    // filename = req.file.path;
+    filename = 'http://192.168.99.100:2000/images/' + req.file.filename;
   }
-
-  let book = req.body;
 
   // add imagePath property on book object
   book.imagePath = filename;
