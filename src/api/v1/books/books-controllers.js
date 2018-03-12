@@ -1,4 +1,4 @@
-const fs = require('fs'),
+const mime = require('mime'),
   BooksModel = require('./books-model.js'),
   multer = require('multer'),
   uuidv4 = require('uuid/v4'),
@@ -12,12 +12,19 @@ const fs = require('fs'),
        //generatedId = uuidv4(),
       let fileName = file.originalname;
 
-      cb(null, fileName);
+      cb(null, fileName + '-' + Date.now());
     }
   });
 
+let fileFilter = (req, file, cb) => {
+  if(file.mimetype !== "image/jpg" && file.mimetype !== "image/jpeg" && file.mimetype !== "image/png") {
+    return cb("please upload a valid book image", false);
+  }
+  cb(null, true);
+}
+
 // instantiate multer to use single property and specify fieldname
-exports.upload = multer({ storage }).single('imagePath');
+exports.upload = multer({ storage, fileFilter }).single('imagePath');
 
 exports.interceptBooksId = (req, res, next, id) => {
   BooksModel.findById(id, (err, data) => {
