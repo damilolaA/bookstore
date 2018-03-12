@@ -9,8 +9,8 @@ const fs = require('fs'),
 
     // use filename property to determine upload file name
     filename: (req, file, cb) => {
-      let generatedId = uuidv4(),
-        fileName = file.originalname + generatedId;
+       //generatedId = uuidv4(),
+      let fileName = file.originalname;
 
       cb(null, fileName);
     }
@@ -36,8 +36,8 @@ exports.addBook = (req, res, next) => {
 
   if (req.file) {
     // pass file path to filename
-    filename = req.file.path;
-    //filename = "http://localhost:port/api/image/" + req.file.filename;
+    //filename = req.file.path;
+    filename = "http://192.168.99.100:2000/images/" + req.file.filename;
   }
 
   let book = req.body;
@@ -67,20 +67,6 @@ exports.getBooks = (req, res, next) => {
     res.status(200).json(data);
   });
 };
-
-/*exports.getImages = (req, res, next) => {
-      
-  image = book.imagePath;
-
-  fs.readFile(image, (err, img) => {
-    if(err) {
-      return console.log('file system could not read imagePath');
-    }
-
-    book = book.toObject();
-    book.img = img;
-  })
-}*/
 
 exports.getBookById = (req, res, next) => {
   if (!req.book) {

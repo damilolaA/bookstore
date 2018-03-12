@@ -3,6 +3,7 @@ const express = require('express'),
   authRouter = require('./v1/auth/auth-router.js'),
   categoryRouter = require('./v1/booksCategory/booksCategory-router.js'),
   booksRouter = require('./v1/books/books-router.js'),
+  //imagesRouter = require('./v1/images/images-router.js'),
   api = express.Router();
 
 // mount adminRouter on /admin path
@@ -16,5 +17,8 @@ api.use('/category', categoryRouter);
 
 // mount booksRouter on /books path
 api.use('/books', booksRouter);
+
+// mount imagesRouter on /images path
+//api.use('/images', imagesRouter);
 
 module.exports = api;
