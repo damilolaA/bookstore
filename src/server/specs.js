@@ -148,7 +148,7 @@ describe('Bookstore App', () => {
         });
     });
 
-    it('should get all books', done => {
+    xit('should get all books', done => {
       request(app)
         .get('/api/v1/books')
         .expect('Content-Type', 'Application/json')
