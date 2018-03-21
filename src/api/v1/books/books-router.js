@@ -7,7 +7,7 @@ router.param('id', controllers.interceptBooksId);
 
 router
   .route('/:id')
-  .get(auth.decodeToken, controllers.getBookById)
+  .get(controllers.getBookById)
   .delete(controllers.deleteBook)
   .put(controllers.upload, controllers.updateBook);
 
@@ -15,6 +15,6 @@ router
 router
   .route('/')
   .post(controllers.upload, controllers.addBook)
-  .get(auth.decodeToken, controllers.getBooks);
+  .get(controllers.getBooks);
 
 module.exports = router;

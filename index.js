@@ -3,6 +3,7 @@ const express = require('express'),
 	  config = require("./config/config.js"),
 	  port = config.port;
 
+
 //app.use(express.static(__dirname + '/uploads'));
 
 app.get('/images/:filename', (req, res) => {
