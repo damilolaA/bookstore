@@ -3,6 +3,10 @@ const express = require('express'),
   auth = require('../auth/auth.js'),
   controllers = require('./books-controllers.js');
 
+router
+  .route('/recentlyViewed')
+  .get(controllers.getRecentlyViewed);
+  
 router.param('id', controllers.interceptBooksId);
 
 router

@@ -11,7 +11,8 @@ const mime = require('mime'),
       // generate unique number and use mime to get file extension
       cb(null, '123' + '-' + Date.now() + '.' + mime.getExtension(file.mimetype));
     }
-  });
+  }),
+  recentlyViewed = [];
 
 let fileFilter = (req, file, cb) => {
   if (file.mimetype !== 'image/jpg' && file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png') {
@@ -44,7 +45,6 @@ exports.addBook = (req, res, next) => {
     // filename = req.file.path;
     filename = 'https://bookstoreappapi.herokuapp.com/images/' + req.file.filename;
   }
-
   // add imagePath property on book object
   book.imagePath = filename;
 
@@ -76,7 +76,37 @@ exports.getBookById = (req, res, next) => {
     return next(new Error('could not find book by id'));
   }
 
+  recentlyViewed.push(req.book);
   res.status(200).json(req.book);
+};
+
+exports.getRecentlyViewed = (req, res, next) => {
+  if(recentlyViewed.length === 0) {
+    BooksModel.find((err, data) => {
+      if(err) {
+        return next(new Error('could not fetch books'))
+      } else {
+
+        for(var i = 0; i < data.length; i++) {
+          recentlyViewed.push(data[i]);
+
+          if(recentlyViewed.length === 4) {
+            break;
+          }
+        }
+
+        res.status(200).json(recentlyViewed);
+      }
+    })
+  } else {
+    if(recentlyViewed.length > 4) {
+      recentlyViewed.shift();
+      console.log('i shifted an array element');
+      res.status(200).json(recentlyViewed);
+    } else {
+      res.status(200).json(recentlyViewed);
+    }
+  }
 };
 
 exports.deleteBook = (req, res, next) => {
