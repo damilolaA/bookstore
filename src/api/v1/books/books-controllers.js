@@ -80,6 +80,16 @@ exports.getBookById = (req, res, next) => {
   res.status(200).json(req.book);
 };
 
+exports.getTopSelling = (req, res, next) => {
+  BooksModel.findOne({ type: 'topSelling' }, (err, data) => {
+    if(err) {
+      return next(new Error('could not get topSelling book'))
+    }
+
+    res.status(200).json(data);
+  });
+}
+
 exports.getRecentlyViewed = (req, res, next) => {
   if(recentlyViewed.length === 0) {
     BooksModel.find((err, data) => {

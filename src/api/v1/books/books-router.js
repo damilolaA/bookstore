@@ -4,6 +4,10 @@ const express = require('express'),
   controllers = require('./books-controllers.js');
 
 router
+  .route('/topSelling')
+  .get(controllers.getTopSelling);
+
+router
   .route('/recentlyViewed')
   .get(controllers.getRecentlyViewed);
   
