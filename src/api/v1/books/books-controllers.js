@@ -43,6 +43,8 @@ exports.addBook = (req, res, next) => {
   if (req.file) {
     // pass file path to filename
     // filename = req.file.path;
+    // 'http://192.168.99.100:2000/images/'
+    // https://bookstoreappapi.herokuapp.com/images/
     filename = 'https://bookstoreappapi.herokuapp.com/images/' + req.file.filename;
   }
   // add imagePath property on book object
