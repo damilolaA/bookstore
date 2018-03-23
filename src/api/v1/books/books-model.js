@@ -13,6 +13,7 @@ booksSchema = new mongoose.Schema({
   publicationDate: { type: String, required: true },
   categoryId: { type: Number, required: true },
   imagePath: { type: String },
+  type: { type: String, default: 'Normal' }
 });
 
 module.exports = mongoose.model('book', booksSchema);

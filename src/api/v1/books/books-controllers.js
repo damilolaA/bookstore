@@ -94,7 +94,6 @@ exports.getRecentlyViewed = (req, res, next) => {
             break;
           }
         }
-
         res.status(200).json(recentlyViewed);
       }
     })
