@@ -1,6 +1,8 @@
 const mime = require('mime'),
   BooksModel = require('./books-model.js'),
   multer = require('multer'),
+  cloudinary = require('cloudinary'),
+  config = require('../../../../config/config.js'),
   // tell multer to store files on disk
   storage = multer.diskStorage({
     // define files destination
@@ -24,6 +26,12 @@ let fileFilter = (req, file, cb) => {
 // instantiate multer to use single property and specify fieldname
 exports.upload = multer({ storage, fileFilter }).single('imagePath');
 
+cloudinary.config({
+  cloud_name: config.CLOUDINARY_CLOUD_NAME,
+  api_key: config.CLOUDINARY_API_KEY,
+  api_secret: config.CLOUDINARY_API_SECRET
+});
+
 exports.interceptBooksId = (req, res, next, id) => {
   BooksModel.findById(id, (err, data) => {
     if (err) {
@@ -41,26 +49,33 @@ exports.addBook = (req, res, next) => {
       filename;
 
   if (req.file) {
-    // pass file path to filename
-    // filename = req.file.path;
     // 'http://192.168.99.100:2000/images/'
     // https://bookstoreappapi.herokuapp.com/images/
-    filename = 'https://bookstoreappapi.herokuapp.com/images/' + req.file.filename;
+    //filename = 'https://bookstoreappapi.herokuapp.com/images/' + req.file.filename;
+    console.log(req.file.path);
+    cloudinary.uploader.upload(req.file.path, (response) => {
+
+      if(response) {
+        console.log(response);
+        // add imagePath property on book object
+        book.imagePath = response.secure_url;
+
+        // instantiate BooksModel and pass book object
+        const bookData = new BooksModel(book);
+
+        // use mongoose save method to persist bookData
+        bookData.save((err, data) => {
+          if (err) {
+            return next(new Error(err));
+          }
+
+          res.status(200).json(data);
+        });
+      } else {
+        return next(new Error('image not uploaded'));
+      }
+    });
   }
-  // add imagePath property on book object
-  book.imagePath = filename;
-
-  // instantiate BooksModel and pass book object
-  const bookData = new BooksModel(book);
-
-  // use mongoose save method to persist bookData
-  bookData.save((err, data) => {
-    if (err) {
-      return next(new Error(err));
-    }
-
-    res.status(200).json(data);
-  });
 };
 
 exports.getBooks = (req, res, next) => {
