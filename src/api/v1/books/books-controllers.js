@@ -49,15 +49,11 @@ exports.addBook = (req, res, next) => {
       filename;
 
   if (req.file) {
-    // 'http://192.168.99.100:2000/images/'
-    // https://bookstoreappapi.herokuapp.com/images/
-    //filename = 'https://bookstoreappapi.herokuapp.com/images/' + req.file.filename;
-    console.log(req.file.path);
+    // store book image in the cloud using cloudinary
     cloudinary.uploader.upload(req.file.path, (response) => {
 
       if(response) {
-        console.log(response);
-        // add imagePath property on book object
+        // add imagePath property gotten from cloudinary response on book object
         book.imagePath = response.secure_url;
 
         // instantiate BooksModel and pass book object
@@ -72,9 +68,11 @@ exports.addBook = (req, res, next) => {
           res.status(200).json(data);
         });
       } else {
-        return next(new Error('image not uploaded'));
+        return next(new Error('image could not be uploaded'));
       }
     });
+  } else {
+    return next(new Error('please upload book image'));
   }
 };
 
