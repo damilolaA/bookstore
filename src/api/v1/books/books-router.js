@@ -10,6 +10,10 @@ router
 router
   .route('/recentlyViewed')
   .get(controllers.getRecentlyViewed);
+
+router
+  .route('/getTrending')
+  .get(controllers.getTrending);
   
 router.param('id', controllers.interceptBooksId);
 
