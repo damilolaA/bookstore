@@ -51,7 +51,7 @@ exports.addBook = (req, res, next) => {
   if (req.file) {
     // store book image in the cloud using cloudinary
     cloudinary.uploader.upload(req.file.path, (response) => {
-      
+
       if(response) {
         // add imagePath property gotten from cloudinary response on book object
         book.imagePath = response.secure_url;
@@ -96,7 +96,7 @@ exports.getBookById = (req, res, next) => {
 };
 
 exports.getTrending = (req, res, next) => {
-  BooksModel.findOne({ type: 'trending' }, (err, data) => {
+  BooksModel.find({ type: 'trending' }, (err, data) => {
     if(err) {
       return next(new Error('could not get trending books'));
     }
