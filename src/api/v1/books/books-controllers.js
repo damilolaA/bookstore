@@ -86,12 +86,31 @@ exports.getBooks = (req, res, next) => {
   });
 };
 
+function containsObject(obj, list) {
+    var i;
+    for (i = 0; i < list.length; i++) {
+        if (JSON.stringify(list[i]) === JSON.stringify(obj)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 exports.getBookById = (req, res, next) => {
   if (!req.book) {
     return next(new Error('could not find book by id'));
   }
 
-  recentlyViewed.push(req.book);
+  var result = containsObject(req.book, recentlyViewed);
+  console.log(result);
+  
+  if(result) {
+    console.log('array contains element already');
+  } else {
+    recentlyViewed.push(req.book);
+  }
+  
   res.status(200).json(req.book);
 };
 
@@ -102,7 +121,7 @@ exports.getTrending = (req, res, next) => {
     }
 
     if(data.length > 4) {
-      
+
      let newData = data.slice(0, 4);
 
      res.status(200).json(newData);
