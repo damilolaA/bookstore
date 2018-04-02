@@ -101,7 +101,14 @@ exports.getTrending = (req, res, next) => {
       return next(new Error('could not get trending books'));
     }
 
-    res.status(200).json(data);
+    if(data.length > 4) {
+      
+     let newData = data.slice(0, 4);
+
+     res.status(200).json(newData);
+    } else {
+      res.status(200).json(data);
+    }
   });
 }
 
