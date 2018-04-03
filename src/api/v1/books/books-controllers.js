@@ -114,6 +114,18 @@ exports.getBookById = (req, res, next) => {
   res.status(200).json(req.book);
 };
 
+exports.getBookByAuthor = (req, res, next) => {
+  BooksModel.find({author: 'Nicholas Zakas'})
+    .populate('comments')
+    .exec(function(err, author) {
+      if(err) {
+        return next(new Error('could not find author'))
+      }
+
+      res.status(200).json(author);
+    })
+}
+
 exports.getTrending = (req, res, next) => {
   BooksModel.find({ type: 'trending' }, (err, data) => {
     if(err) {
