@@ -2,8 +2,8 @@ const AdminModel = require('./admin-model.js'),
   redisClient = require('redis').createClient,
   config = require('../../../../config/config.js'),
   { redisURL, redisPort, redisHost } = config,
-  //redis = redisClient(redisPort, redisHost);
-  redis = redisClient(redisURL);
+  redis = redisClient(redisPort, redisHost);
+  //redis = redisClient(redisURL);
 
 exports.interceptIds = (req, res, next, id) => {
   // find admin using id

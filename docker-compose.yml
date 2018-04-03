@@ -24,6 +24,6 @@ services:
       - "2000:2000"
       - "3000:3000"
     volumes:
-      - "/c/Users/bookstore:/opt/app"
+      - "C:/Users/bookstore/:/opt/app"
 
       

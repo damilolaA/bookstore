@@ -7,3 +7,12 @@ exports.signIn = (req, res) => {
 
   res.status(200).json(req.admin);
 };
+
+exports.signUserIn = (req, res) => {
+  console.log(req.user);
+  let token = auth.signToken(req.user._id);
+
+  req.user._token = token;
+
+  res.status(200).json(req.user);
+};
