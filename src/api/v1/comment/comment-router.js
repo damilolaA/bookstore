@@ -3,6 +3,7 @@ const express = require('express'),
 	  controller = require('./comment-controller');
 
 router.route('/')
-	.post(controller.addComment);
+	.post(controller.addComment)
+	.get(controller.getComments)
 
 module.exports = router;

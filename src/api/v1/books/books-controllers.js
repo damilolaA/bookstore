@@ -32,7 +32,7 @@ cloudinary.config({
   api_secret: config.CLOUDINARY_API_SECRET
 });
 
-exports.interceptBooksId = (req, res, next, id) => {
+/*exports.interceptBooksId = (req, res, next, id) => {
   BooksModel.findById(id, (err, data) => {
     if (err) {
       return next(new Error('could not get book id'));
@@ -41,7 +41,7 @@ exports.interceptBooksId = (req, res, next, id) => {
     req.book = data;
     next();
   });
-};
+};*/
 
 exports.addBook = (req, res, next) => {
   // check if a file was uploaded
@@ -98,33 +98,39 @@ function containsObject(obj, list) {
 }
 
 exports.getBookById = (req, res, next) => {
-  if (!req.book) {
-    return next(new Error('could not find book by id'));
-  }
 
-  var result = containsObject(req.book, recentlyViewed);
-  console.log(result);
-  
-  if(result) {
-    console.log('array contains element already');
-  } else {
-    recentlyViewed.push(req.book);
-  }
-  
-  res.status(200).json(req.book);
-};
+  let id = req.params.id;
 
-exports.getBookByAuthor = (req, res, next) => {
-  BooksModel.find({author: 'Nicholas Zakas'})
+  BooksModel.findById(id)
+  .populate('comments')
+  .exec((err, book) => {
+    if (err) {
+      return next(new Error('could not find book by id'));
+    }
+
+    var result = containsObject(book, recentlyViewed);
+    
+    if(result) {
+      console.log('array contains element already');
+    } else {
+      recentlyViewed.push(book);
+    }
+    
+    res.status(200).json(book);
+  })
+}
+
+/*exports.getBookByAuthor = (req, res, next) => {
+  BooksModel.find()
     .populate('comments')
     .exec(function(err, author) {
       if(err) {
-        return next(new Error('could not find author'))
+        return next(new Error('could not find author'));
       }
 
       res.status(200).json(author);
-    })
-}
+    });
+}*/
 
 exports.getTrending = (req, res, next) => {
   BooksModel.find({ type: 'trending' }, (err, data) => {

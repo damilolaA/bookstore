@@ -15,11 +15,12 @@ router
   .route('/getTrending')
   .get(controllers.getTrending);
 
-router
+/*router
   .route('/getAuthor')
   .get(controllers.getBookByAuthor);
+*/
   
-router.param('id', controllers.interceptBooksId);
+// router.param('id', controllers.interceptBooksId);
 
 router
   .route('/:id')
