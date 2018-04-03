@@ -9,10 +9,10 @@ exports.signIn = (req, res) => {
 };
 
 exports.signUserIn = (req, res) => {
-  console.log(req.user);
-  let token = auth.signToken(req.user._id);
+  console.log(req.info);
+  let token = auth.signToken(req.info._id);
 
-  req.user._token = token;
+  req.info._token = token;
 
-  res.status(200).json(req.user);
+  res.status(200).json(req.info);
 };

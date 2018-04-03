@@ -41,7 +41,7 @@ exports.verifyAdmin = (req, res, next) => {
 
 exports.verifyUser = (req, res, next) => {
   let { email, password } = req.body;
-  console.log(req.body);
+  
   if (!email || !password) {
     return next(new Error('please pass email and password'));
   }
@@ -63,8 +63,8 @@ exports.verifyUser = (req, res, next) => {
 
     objData.msg = 'Login Successful!!!';
 
-    req.user = objData;
-    // console.log(req.user);
+    req.info = objData;
+    
     next();
   });
 };
