@@ -1,5 +1,6 @@
 const CommentModel = require('./comment-model'),
-	  BookModel = require('../books/books-model');
+	  BookModel = require('../books/books-model'),
+	  userModel = require('../user/user-model');
 
 exports.addComment = (req, res, next) => {
 
@@ -11,18 +12,36 @@ exports.addComment = (req, res, next) => {
 			return next(new Error('could not save comments'))
 		}
 
-		let id = response.bookId;
+		let id = response.bookId,
+			userId = response.userId;
 
-		BookModel.findByIdAndUpdate(id, 
-			{ $push: {"comments": response} },
-			{safe: true, upsert: true, new : true},
-			(err, result) => {
-				if(err) {
-					return next(new Error('could not populate comments array'))
-				}
-				console.log(result);
-			})
-		res.status(200).json(response);
+		userModel.findById({_id: userId}, (err, userData) => {
+			if(err) {
+				return next(new Error('could not get user details'))
+			}
+
+			if(userData) {
+				let firstName = userData.firstName,
+					lastName = userData.lastName,
+					fullName = firstName + " " + lastName;
+
+				response = response.toObject();
+				response.fullName = fullName;
+				console.log(response);
+
+				BookModel.findByIdAndUpdate(id, 
+					{ $push: {"comments": response} },
+					{safe: true, upsert: true, new : true},
+					(err, result) => {
+						if(err) {
+							return next(new Error('could not populate comments array'))
+						}
+						//console.log(result);
+					}
+				)
+			}
+			res.status(200).json(response);
+		})
 	});
 	
 }
