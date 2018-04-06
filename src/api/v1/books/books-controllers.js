@@ -188,19 +188,19 @@ exports.getRecentlyViewed = (req, res, next) => {
 };
 
 exports.deleteBook = (req, res, next) => {
-  let bookId = req.book._id;
+  let bookId = req.params.id;
 
-  BooksModel.remove({ _id: bookId }, err => {
+  BooksModel.remove({ _id: bookId }, (err, result) => {
     if (err) {
       return next(new Error('could not delete book by Id'));
     }
 
-    res.status(200).json(req.book);
+    res.status(200).json(result);
   });
 };
 
 exports.updateBook = (req, res, next) => {
-  let bookId = req.book._id,
+  let bookId = req.params.id,
     filename = req.file.path,
     bookData = req.body;
 
