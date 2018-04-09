@@ -23,6 +23,10 @@ router
 // router.param('id', controllers.interceptBooksId);
 
 router
+  .route('/categories/:categoryId')
+  .get(controllers.getBooksByCategoryId);
+
+router
   .route('/:id')
   .get(controllers.getBookById)
   .delete(controllers.deleteBook)

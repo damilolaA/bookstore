@@ -187,6 +187,18 @@ exports.getRecentlyViewed = (req, res, next) => {
   }
 };
 
+exports.getBooksByCategoryId = (req, res, next) => {
+  let categoryId = req.params.categoryId;
+
+  BooksModel.find({categoryId: categoryId}, (err, data) => {
+    if(err) {
+      return next(new Error('could not fetch data'));
+    }
+
+    res.status(200).json(data);
+  })
+}
+
 exports.deleteBook = (req, res, next) => {
   let bookId = req.params.id;
 
