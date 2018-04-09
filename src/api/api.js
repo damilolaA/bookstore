@@ -6,6 +6,7 @@ const express = require('express'),
   booksRouter = require('./v1/books/books-router.js'),
   userRouter = require('./v1/user/user-router.js'),
   commentRouter = require('./v1/comment/comment-router.js'),
+  cartRouter = require('./v1/cart/cart-router.js'),
   api = express.Router();
 
 // mount adminRouter on /admin path
@@ -29,7 +30,7 @@ api.use('/user', userRouter);
 // mount commentRouter on /comment path
 api.use('/comment', commentRouter);
 
-// mount imagesRouter on /images path
-// api.use('/images', imagesRouter);
+// mount cartRouter on /cart path
+api.use('/cart', cartRouter);
 
 module.exports = api;
