@@ -40,3 +40,32 @@ exports.getItem = (req, res, next) => {
 		res.status(200).json(data);
 	})
 }
+
+exports.deleteItem = (req, res, next) => {
+	let id = req.params.id;
+
+	cartModel.findByIdAndRemove(id, (err, data) => {
+		if(err) {
+			return next(new Error('could not delete item'));
+		}
+
+		res.status(200).json(data);
+	})
+}
+
+exports.updateItem = (req, res, next) => {
+	let id = req.params.id,
+		details = req.body,
+		price = details.price,
+		quantity = details.quantity,
+		total = price * quantity;
+
+	details.total = total;
+
+	cartModel.findByIdAndUpdate(id, details, {new: true}, (err, data) => {
+		if(err) {
+			return next(new Error('could not update item'))
+		}
+		res.status(200).json(data)
+	})
+}
