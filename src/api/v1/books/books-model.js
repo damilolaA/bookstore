@@ -15,7 +15,7 @@ booksSchema = new Schema({
   categoryId: { type: Number, required: true },
   imagePath: { type: String },
   type: { type: String, default: 'Normal' },
-  comments: [{ type: Schema.Types.ObjectId, ref:'Comment' }]
+  comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }]
 });
 
 module.exports = mongoose.model('book', booksSchema);

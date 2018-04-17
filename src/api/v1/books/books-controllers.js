@@ -3,6 +3,8 @@ const mime = require('mime'),
   multer = require('multer'),
   cloudinary = require('cloudinary'),
   config = require('../../../../config/config.js'),
+  elasticSearch = require('../../../search.js'),
+
   // tell multer to store files on disk
   storage = multer.diskStorage({
     // define files destination
@@ -32,27 +34,18 @@ cloudinary.config({
   api_secret: config.CLOUDINARY_API_SECRET
 });
 
-/*exports.interceptBooksId = (req, res, next, id) => {
-  BooksModel.findById(id, (err, data) => {
-    if (err) {
-      return next(new Error('could not get book id'));
-    }
-
-    req.book = data;
-    next();
-  });
-};*/
+elasticSearch.createIndex('store');
 
 exports.addBook = (req, res, next) => {
   // check if a file was uploaded
   let book = req.body,
-      filename;
+    filename;
 
   if (req.file) {
+    elasticSearch.addDocument(book, 'store');
     // store book image in the cloud using cloudinary
-    cloudinary.uploader.upload(req.file.path, (response) => {
-
-      if(response) {
+    cloudinary.uploader.upload(req.file.path, response => {
+      if (response) {
         // add imagePath property gotten from cloudinary response on book object
         book.imagePath = response.secure_url;
 
@@ -81,103 +74,87 @@ exports.getBooks = (req, res, next) => {
     if (err) {
       return next(new Error('could not fetch books'));
     }
-
     res.status(200).json(data);
   });
 };
 
 function containsObject(obj, list) {
-    var i;
-    for (i = 0; i < list.length; i++) {
-        if (JSON.stringify(list[i]) === JSON.stringify(obj)) {
-            return true;
-        }
+  var i;
+  for (i = 0; i < list.length; i++) {
+    if (JSON.stringify(list[i]) === JSON.stringify(obj)) {
+      return true;
     }
+  }
 
-    return false;
+  return false;
 }
 
 exports.getBookById = (req, res, next) => {
-
   let id = req.params.id;
 
   BooksModel.findById(id)
-  .populate('comments')
-  .exec((err, book) => {
-    if (err) {
-      return next(new Error('could not find book by id'));
-    }
-
-    var result = containsObject(book, recentlyViewed);
-    
-    if(result) {
-      console.log('array contains element already');
-    } else {
-      recentlyViewed.push(book);
-    }
-    
-    res.status(200).json(book);
-  })
-}
-
-/*exports.getBookByAuthor = (req, res, next) => {
-  BooksModel.find()
     .populate('comments')
-    .exec(function(err, author) {
-      if(err) {
-        return next(new Error('could not find author'));
+    .exec((err, book) => {
+      if (err) {
+        return next(new Error('could not find book by id'));
       }
 
-      res.status(200).json(author);
+      var result = containsObject(book, recentlyViewed);
+
+      if (result) {
+        console.log('array contains element already');
+      } else {
+        recentlyViewed.push(book);
+      }
+
+      res.status(200).json(book);
     });
-}*/
+};
 
 exports.getTrending = (req, res, next) => {
   BooksModel.find({ type: 'trending' }, (err, data) => {
-    if(err) {
+    if (err) {
       return next(new Error('could not get trending books'));
     }
 
-    if(data.length > 4) {
+    if (data.length > 4) {
+      let newData = data.slice(0, 4);
 
-     let newData = data.slice(0, 4);
-
-     res.status(200).json(newData);
+      res.status(200).json(newData);
     } else {
       res.status(200).json(data);
     }
   });
-}
+};
 
 exports.getTopSelling = (req, res, next) => {
   BooksModel.findOne({ type: 'topSelling' }, (err, data) => {
-    if(err) {
-      return next(new Error('could not get topSelling book'))
+    if (err) {
+      return next(new Error('could not get topSelling book'));
     }
 
     res.status(200).json(data);
   });
-}
+};
 
 exports.getRecentlyViewed = (req, res, next) => {
-  if(recentlyViewed.length === 0) {
+  if (recentlyViewed.length === 0) {
     BooksModel.find((err, data) => {
-      if(err) {
-        return next(new Error('could not fetch books'))
+      if (err) {
+        return next(new Error('could not fetch books'));
       } else {
-
-        for(var i = 0; i < data.length; i++) {
+        for (var i = 0; i < data.length; i++) {
           recentlyViewed.push(data[i]);
 
-          if(recentlyViewed.length === 4) {
+          if (recentlyViewed.length === 4) {
             break;
           }
         }
         res.status(200).json(recentlyViewed);
       }
-    })
+    });
   } else {
-    if(recentlyViewed.length > 4) {
+    if (recentlyViewed.length > 4) {
       recentlyViewed.shift();
       console.log('i shifted an array element');
       res.status(200).json(recentlyViewed);
@@ -190,14 +167,14 @@ exports.getRecentlyViewed = (req, res, next) => {
 exports.getBooksByCategoryId = (req, res, next) => {
   let categoryId = req.params.categoryId;
 
-  BooksModel.find({categoryId: categoryId}, (err, data) => {
-    if(err) {
+  BooksModel.find({ categoryId: categoryId }, (err, data) => {
+    if (err) {
       return next(new Error('could not fetch data'));
     }
 
     res.status(200).json(data);
-  })
-}
+  });
+};
 
 exports.deleteBook = (req, res, next) => {
   let bookId = req.params.id;

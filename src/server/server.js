@@ -3,11 +3,12 @@ const express = require('express'),
   morgan = require('morgan'),
   cors = require('cors'),
   api = require('../api/api.js'),
+  elasticSearch = require('../search.js'),
   app = express();
 
 // mount body-parser middleware to parse req.body
 app.use(bps.json());
-app.use(bps.urlencoded({ extended: false }));
+app.use(bps.urlencoded({ extended: true }));
 
 // middleware to handle cross origin resource sharing
 app.use(cors());

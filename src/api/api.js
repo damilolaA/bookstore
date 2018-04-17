@@ -7,6 +7,7 @@ const express = require('express'),
   userRouter = require('./v1/user/user-router.js'),
   commentRouter = require('./v1/comment/comment-router.js'),
   cartRouter = require('./v1/cart/cart-router.js'),
+  searchRouter = require('./v1/search/search-router.js'),
   api = express.Router();
 
 // mount adminRouter on /admin path
@@ -32,5 +33,8 @@ api.use('/comment', commentRouter);
 
 // mount cartRouter on /cart path
 api.use('/cart', cartRouter);
+
+// mount searchRouter on /search path
+api.use('/search', searchRouter);
 
 module.exports = api;

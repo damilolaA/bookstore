@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken'),
   expressJwt = require('express-jwt'),
   AdminModel = require('../admin/admin-model.js'),
-  UserModel  = require('../user/user-model.js'),
+  UserModel = require('../user/user-model.js'),
   config = require('../../../../config/config.js'),
   { secret } = config,
   checkToken = expressJwt({ secret });
@@ -41,7 +41,7 @@ exports.verifyAdmin = (req, res, next) => {
 
 exports.verifyUser = (req, res, next) => {
   let { email, password } = req.body;
-  
+
   if (!email || !password) {
     return next(new Error('please pass email and password'));
   }
@@ -64,7 +64,7 @@ exports.verifyUser = (req, res, next) => {
     objData.msg = 'Login Successful!!!';
 
     req.info = objData;
-    
+
     next();
   });
 };

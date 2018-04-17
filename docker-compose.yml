@@ -13,7 +13,22 @@ services:
     ports:
       - "6379:6379"
     volumes:
-      - "/redis/data:/data"
+      - "/c/Users/bookstore/redis/data:/data"
+
+  elastic:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.3
+    environment: 
+      - bootstrap.memory_lock=true
+      - ES_JAVA_OPTS= -Xms512m -Xmx512m
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - "/c/Users/bookstore/esdata1:/usr/share/elasticsearch/data"
 
   nodeapp:
     build:
@@ -24,6 +39,10 @@ services:
       - "2000:2000"
       - "3000:3000"
     volumes:
-      - "C:/Users/bookstore/:/opt/app"
+      - "/c/Users/bookstore/:/opt/app"
+
+volumes:
+  esdata1:
+    driver: local
 
       

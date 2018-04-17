@@ -3,28 +3,20 @@ const express = require('express'),
   auth = require('../auth/auth.js'),
   controllers = require('./books-controllers.js');
 
-router
-  .route('/topSelling')
-  .get(controllers.getTopSelling);
+router.route('/topSelling').get(controllers.getTopSelling);
 
-router
-  .route('/recentlyViewed')
-  .get(controllers.getRecentlyViewed);
+router.route('/recentlyViewed').get(controllers.getRecentlyViewed);
 
-router
-  .route('/getTrending')
-  .get(controllers.getTrending);
+router.route('/getTrending').get(controllers.getTrending);
 
 /*router
   .route('/getAuthor')
   .get(controllers.getBookByAuthor);
 */
-  
+
 // router.param('id', controllers.interceptBooksId);
 
-router
-  .route('/categories/:categoryId')
-  .get(controllers.getBooksByCategoryId);
+router.route('/categories/:categoryId').get(controllers.getBooksByCategoryId);
 
 router
   .route('/:id')
